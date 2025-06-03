@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+  Отправка
+{% endblock title %}
+{% block style %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static '' %}css/{{ theme }}/main.css" />
+{% endblock style %}
+{% block content %}
+  <div class="mt-5 nav">
+    <a role="button" class="btn btn-light btn-lg" onclick="history.back()">Назад</a>
+  </div>
+  <div class="d-flex align-items-center justify-content-center">
+    <div class="container text-white">
+      <div class="text-center">
+        <h2 class="lab">Отправка</h2>
+        <form method="post" enctype="multipart/form-data" class="form">
+          {% csrf_token %}
+          {% crispy form %}
+        </form>
+      </div>
+      <div class="hoverable mt-5">
+        <span class="hoverable__main text-center reqs">
+          <h5>Требования, предъявляемые к программам</h5>
+        </span>
+        <span class="hoverable__tooltip">
+          <div class="mt-5 text-left">
+            <ul>
+              <li>
+                Исходные тексты программы не должны содержать функции с именем <b>main</b>
+              </li>
+              <li>Программа не должна принимать аргументы командной строки</li>
+              <li>
+                Рекомендуется помечать возвращаемое значение как <b>volatile</b>
+              </li>
+              <li>Выполнение программы должно осуществляться функцией с любым названием (кроме main), не принимающей параметров</li>
+              <li>Если в программе присутствует только одна функция, то она автоматически выбирается в качестве целевой</li>
+              <li>
+                Если в программе присутствует функция с именем <b>optimus</b>, то она автоматически выбирается в качестве целевой независимо от наличия других функций
+              </li>
+              <li>
+                Если в программе присутствует несколько функций и предыдущее условие не выполняется, то пользователю предлагается выбрать функцию из списка найденных в программе
+              </li>
+            </ul>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

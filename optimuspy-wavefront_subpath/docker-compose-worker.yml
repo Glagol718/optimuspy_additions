@@ -1,0 +1,71 @@
+version: "3.9"
+
+services:
+  worker_default:
+    build: .
+#    entrypoint: /bin/sh
+    command: /optimuspy/scripts/worker_entrypoint.sh
+    environment:
+      CELERY_QUEUE: "default"
+      WORKER_CONCURRENCY: 2
+    # depends_on:
+    #   - db
+    #   - rabbitmq
+    volumes:
+      - task_files:/optimuspy/tasks
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+    networks:
+      - optimus_net
+
+  worker_gpu:
+    build: .
+#    entrypoint: /bin/sh
+    command: /optimuspy/scripts/worker_entrypoint.sh
+    environment:
+      CELERY_QUEUE: "gpu"
+      WORKER_CONCURRENCY: 4
+    # depends_on:
+    #   - db
+    #   - rabbitmq
+    volumes:
+      - task_files:/optimuspy/tasks
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+    networks:
+      - optimus_net
+
+  worker_highmem:
+    build: .
+#    entrypoint: /bin/sh
+    command: /optimuspy/scripts/worker_entrypoint.sh
+    environment:
+      CELERY_QUEUE: "highmem"
+      WORKER_CONCURRENCY: 2
+    # depends_on:
+    #   - db
+    #   - rabbitmq
+    volumes:
+      - task_files:/optimuspy/tasks
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+    networks:
+      - optimus_net
+
+
+volumes:
+  static_files:
+  task_files:
+  db_data:
+
+
+networks:
+  optimus_net:
+    external: true
+    name: optimus_net 

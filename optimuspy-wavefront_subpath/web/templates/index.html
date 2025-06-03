@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+  optimus.py
+{% endblock title %}
+{% block style %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}" />
+{% endblock style %}
+{% block content %}
+  <div class="h-100 d-flex align-items-center justify-content-center">
+    <div class="container text-center">
+      <img src="{% static 'images/logo.png' %}"
+           alt="optimuspy"
+           height="auto"
+           width="auto" />
+      <p class="text-white h4 landing">
+        Сервис тестирования производительности программ на языке программирования C99 для
+        сравнения результатов оптимизаций и разных комбинаций преобразований,
+        проводимых оптимизирующим компилятором.
+      </p>
+      <a role="button" class="btn btn-dark btn-xl" href={% url 'login' %}>Войти</a>
+      <a role="button" class="btn btn-light btn-xl" href={% url 'signup' %}>Регистрация</a>
+    </div>
+  </div>
+{% endblock content %}
+{% block footer %}
+  <footer class="text-center">
+    <a href="https://ops.rsu.ru">
+      <img src="{% static 'images/ops.png' %}"
+           alt="ops"
+           class="footer"
+           height="auto"
+           width="auto" />
+    </a>
+    {% comment %} <a href="https://youtu.be/dQw4w9WgXcQ">
+      <img src="{% static 'images/vulkan.gif' %}"
+           alt="777"
+           class="footer"
+           height="auto"
+           width="auto" />
+    </a> {% endcomment %}
+  </footer>
+{% endblock footer %}

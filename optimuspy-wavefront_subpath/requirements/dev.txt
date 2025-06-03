@@ -1,0 +1,9 @@
+-r prod.txt
+pylint
+autopep8
+djlint
+pylint-django
+pylint-celery
+flower
+requests
+daphne

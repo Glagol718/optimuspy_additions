@@ -1,0 +1,53 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "optimuspy-sqlite",
+      "database": "${workspaceFolder:optimuspy}/db.sqlite3"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "optimuspy",
+      "database": "optimuspy",
+      "username": "optimuspy",
+    }
+  ],
+  "python.linting.pylintArgs": [
+    "--load-plugins=pylint_django, pylint_celery",
+    "--django-settings-module=optimuspy.settings",
+    "--disable=missing-docstring",
+    "--disable=invalid-name"
+  ],
+  // "sqltools.useNodeRuntime": true,
+  "sqltools.autoOpenSessionFiles": false,
+  // "sqltools.autoConnectTo": [
+  //   "optimuspy"
+  // ],
+  // "sqltools.disableNodeDetectNotifications": true,
+  "files.exclude": {
+    "**/__pycache__": true,
+    ".venv": true,
+    "db.sqlite3": true,
+    ".gitmodules": true,
+    ".gitattributes": true,
+    "opsc-bin": true,
+    "catch2": true,
+    "opsc": true,
+    "manage.py": true,
+    ".env": true
+  },
+  "python.testing.unittestArgs": [
+    "-v",
+    "-s",
+    "./web",
+    "-p",
+    "test*.py"
+  ],
+  "python.testing.pytestEnabled": false,
+  "python.testing.unittestEnabled": true,
+  "files.eol": "\n"
+}

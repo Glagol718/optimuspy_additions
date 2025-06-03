@@ -1,0 +1,13 @@
+token: ############
+# url: http://192.168.0.115:8111
+url: http://localhost:8173
+username: glagol #admin
+password: 7355608gr #11111
+settings:
+   compiler: 'GCC'
+   pass_name: 'NoOptPass'
+   cflags: 'O3'
+   worker_types: 'gpu'
+   additional_ops_args: ' -ftransforms=rename[optimus,main] '
+   after_ops_args: ' -ftransforms=rename[main,optimus] '
+   iterations: 10

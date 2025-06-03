@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+  Выбор функции
+{% endblock title %}
+{% block style %}
+  <link rel="stylesheet"
+        type="text/css"
+        href="{% static '' %}css/{{ theme }}/signature.css" />
+{% endblock style %}
+{% block content %}
+  <div class="mt-5 nav">
+    <button type="submit"
+            form="form1"
+            name="btn"
+            value="cancel"
+            class="btn btn-light btn-lg">Отменить</button>
+  </div>
+  <div class="h-100 d-flex align-items-center justify-content-center">
+    <div class="container text-center text-white">
+      <h2 class="lab">Выберите целевую функцию</h2>
+      <form id="form1" method="post" class="form">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" name="btn" value="ok" class="btn btn-dark btn-lg mt5">Готово</button>
+      </form>
+    </div>
+  </div>
+{% endblock content %}

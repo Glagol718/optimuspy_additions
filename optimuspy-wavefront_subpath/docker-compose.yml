@@ -1,0 +1,80 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    networks:
+      - optimus_net
+    #networks:
+    #  - my_network
+    # ports:
+    #   - $DATABASE_PORT:5432
+
+  rabbitmq:
+    image: rabbitmq
+    networks:
+      - optimus_net
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_files:/var/www/optimuspy/static
+    ports:
+      - $FRONTEND_PORT:80
+    depends_on:
+      - web
+    networks:
+      - optimus_net
+   # TODO: put into dev config!
+   # labels:
+   #   - "traefik.http.routers.optimuspy.rule=Host(`optimuspy.docker.localhost`)"
+   #   - "traefik.http.services.optimuspy.loadbalancer.server.port=80"
+   #   - "traefik.docker.network=traefik_default"
+   # networks:
+   #   - web
+   #   - default
+   # extra_hosts:
+   #   - host.docker.internal:host-gateway
+
+
+  web:
+    build: .
+    entrypoint: /bin/sh
+    command: /optimuspy/scripts/entrypoint.sh
+    volumes:
+      - ./web:/optimuspy/web
+      - ./optimuspy:/optimuspy/optimuspy
+      - static_files:/var/www/optimuspy/static
+      - task_files:/optimuspy/tasks
+    depends_on:
+      - db
+      - rabbitmq
+    networks:
+      - optimus_net
+    expose:
+      - 8000
+
+#networks:
+#  my_network:
+#    driver: bridge
+
+networks:
+  optimus_net:
+    driver: bridge
+    name: optimus_net
+    # external: true
+
+volumes:
+  static_files:
+  task_files:
+  db_data:
+
+# TODO: put into dev config!
+#networks:
+#  web:
+#    external:
+#      name: traefik_default
+

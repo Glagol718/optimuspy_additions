@@ -1,0 +1,25 @@
+html,
+body {
+    height: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+    background-color: grey;
+}
+
+.lab {
+    margin-bottom: 10%;
+}
+
+.mt5 {
+    margin-top: 5%;
+}
+
+input {
+    max-width: 16em;
+    margin-left: calc(50% - 8em);
+}
+
+.form {
+    margin-left: 20%;
+    margin-right: 20%;
+}

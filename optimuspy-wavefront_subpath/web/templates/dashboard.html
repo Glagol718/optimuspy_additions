@@ -1,0 +1,10 @@
+{% for type, tasks in task_groups.items %}
+<div class="task-group">
+    <h3>{{ type|title }} Tasks ({{ tasks|length }})</h3>
+    <ul>
+        {% for task in tasks %}
+        <li>{{ task.name }} - {{ task.date }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endfor %}

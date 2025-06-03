@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru-RU">
+  <head>
+    <title>
+      {% block title %}
+      {% endblock title %}
+    </title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %} {% bootstrap_javascript %}
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static 'css/password.css' %}" />
+    <link rel="shortcut icon"
+          type="image/png"
+          href="{% static 'images/favicon.ico' %}" />
+    <meta name="description" content="Password">
+    <meta name="keywords" content="Password">
+  </head>
+  <body>
+    {% block content %}
+    {% endblock content %}
+  </body>
+</html>

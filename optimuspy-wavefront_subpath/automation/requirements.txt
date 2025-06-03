@@ -1,0 +1,11 @@
+pyyaml
+munch
+requests
+bayesian-optimization
+scikit-learn
+scikit-optimize
+diskcache
+tqdm
+torch
+optuna
+hyperopt

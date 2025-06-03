@@ -1,0 +1,3 @@
+[submodule "opsc-bin"]
+	path = opsc-bin
+	url = https://github.com/COOLIRON2311/opsc-bin

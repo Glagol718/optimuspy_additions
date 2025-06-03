@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+  Вход
+{% endblock title %}
+{% block style %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+{% endblock style %}
+{% block content %}
+  <div class="mt-5">
+    <a role="button" class="btn btn-light btn-lg" onclick="history.back()">Назад</a>
+  </div>
+  <div class="h-100 d-flex align-items-center justify-content-center">
+    <div class="container text-center text-white">
+      <h2 class="lab">Войти</h2>
+      <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-dark btn-lg mt5">Готово</button>
+        <div class="mt3">
+          <a href="{% url 'social:begin' 'github' %}" class="text-decoration-none">
+            <img src="{% static 'images/github.svg' %}"
+                 alt="github"
+                 height="5%"
+                 width="5%" />
+          </a>
+          <a href="{% url 'social:begin' 'gitlab' %}" class="text-decoration-none">
+            <img src="{% static 'images/gitlab.svg' %}"
+                 alt="gitlab"
+                 height="7%"
+                 width="7%" />
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="text-white text-center">
+    Все еще нет аккаунта?
+    <a href="{% url 'signup' %}" class="text-white">Зарегистрироваться</a>
+  </div>
+  <div class="text-white text-center">
+    Забыли пароль?
+    <a href="{% url 'password_reset' %}" class="text-white">Сбросить</a>
+  </div>
+{% endblock content %}

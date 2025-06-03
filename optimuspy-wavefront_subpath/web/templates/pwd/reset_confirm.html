@@ -1,0 +1,17 @@
+{% extends "pwd/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Сброс пароля
+{% endblock title %}
+{% block content %}
+    <div class="h-100 d-flex align-items-center justify-content-center">
+        <div class="container text-center text-white mt-5">
+            <h2 class="lab">Введите новый пароль</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-dark btn-lg mt5">Далее</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

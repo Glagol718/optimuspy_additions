@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru-RU">
+    <head>
+        <title>
+            {% block title %}
+            {% endblock title %}
+        </title>
+        {% load bootstrap5 %}
+        {% bootstrap_css %} {% bootstrap_javascript %}
+        {% block style %}
+        {% endblock style %}
+        <link rel="shortcut icon"
+              type="image/png"
+              href="{% static 'favicon.ico' %}" />
+        <meta name="description"
+              content="Optimuspy is a web service for optimizing and performance testing C99 programs.">
+        <meta name="keywords"
+              content="optimuspy, compiler, optimizing, performance, testing">
+    </head>
+    <body>
+        {% block content %}
+        {% endblock content %}
+    </body>
+    {% block footer %}
+    {% endblock footer %}
+</html>
