@@ -10,4 +10,4 @@ settings:
    worker_types: 'gpu'
    additional_ops_args: ' -ftransforms=rename[optimus,main] '
    after_ops_args: ' -ftransforms=rename[main,optimus] '
-   iterations: 10
+   iterations: 50
