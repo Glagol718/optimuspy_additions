@@ -203,12 +203,12 @@ def run_single_benchmark(task_id: int, pass_num: int, compiler_id: int, cflag_na
         cwd = getcwd()
         try:
             chdir(subdir)
-            ps1 = sp.run(['make', 'build'], check=False, capture_output=True)
+            ps1 = sp.run(['make', 'build'], check=False, capture_output=True, timeout = 60)
             
             if ps1.returncode != 0:
                 CompError.objects.create(bench=b, text=ps1.stderr.decode('utf-8'))
 
-            ps2 = sp.run(['make', 'test'], check=False)
+            ps2 = sp.run(['make', 'test'], check=False, timeout = 60)
         except Exception as e2:
             logger.error(f"Benchmark failed: {e2}")
             b.error = True
