@@ -30,6 +30,8 @@ from web.ops.compilers import (Compiler, Compilers, GenericCflags,
 from web.ops.passes import Passes
 from web.tasks import compiler_job, compiler_job_default, compiler_job_gpu, compiler_job_highmem
 
+import os
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
