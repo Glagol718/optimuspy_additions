@@ -4,6 +4,9 @@ from pathlib import Path
 
 from django.conf import settings
 
+import time
+from threading import Timer
+
 
 class Pass:
     '''Проход без аргументов. Не делает оптимизаций.'''
@@ -14,10 +17,28 @@ class Pass:
         self._c_files = c_files
 
     def run(self) -> int:
-        code = 0
+
+        def kill_process(p):
+            try:
+                p.kill()
+            except:
+                pass 
+
+        code = -1
         for file in self._c_files:
-            with sp.Popen([f'{settings.OPSC_PATH}/opsc', *self.args, *settings.INCLUDES, '-o', f'{file}', f'{file}']) as p:
-                code = max(code, p.wait())
+            try:
+                p = sp.Popen([f'{settings.OPSC_PATH}/opsc', *self.args, *settings.INCLUDES, '-o', f'{file}', f'{file}'])
+                
+                timer = Timer(25.0, kill_process, [p])
+                timer.start()
+                
+                ret = p.wait()
+                timer.cancel()
+                
+                code = max(code, ret)
+            except:
+                code = max(code, -1)
+        
         return code
 
 
