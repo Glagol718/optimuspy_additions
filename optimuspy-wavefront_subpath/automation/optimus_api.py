@@ -97,10 +97,11 @@ class TestingService(object):
         r = requests.post(self.url + '/api/result/', json=data, timeout=60)
         json = r.json()
         if "benchmarks" not in json or not json["benchmarks"]:
-            return (-1, -1)  # Возвращаем код ошибки
+            return (-1, -1)
         if not json["benchmarks"][0]["error"]:
             runtime = json["benchmarks"][0]["value"]
+            unit = json["benchmarks"][0]["unit"]
         else:
             runtime = -1
         ret_code = json["benchmarks"][0]["return_code"]
-        return (runtime, ret_code)
+        return (runtime, ret_code, unit)
