@@ -29,15 +29,12 @@ class DQN(nn.Module):
         super(DQN, self).__init__()
         self.embedding = nn.Embedding(len(available_passes) + 1, 16)
         self.lstm = nn.LSTM(16, 64, num_layers=2, batch_first=True)
-        # self.attention = nn.MultiheadAttention(64, 4, batch_first=True)
         self.fc1 = nn.Linear(64 + 1, 64)
         self.fc2 = nn.Linear(64, output_size)
 
     def forward(self, state, length):
         x = self.embedding(state)
         x, _ = self.lstm(x)
-        # attn_output, _ = self.attention(x, x, x)
-        # x = attn_output[:, -1, :]
         x = x[:, -1, :]
         x = torch.cat([x, length], dim=1)
         x = F.relu(self.fc1(x))
@@ -178,7 +175,6 @@ class SearchingOptimizer:
         self.bad_sequences_path = "bad_sequences.json"
         self.bad_sequences = self.load_bad_sequences()
         self.failed_outputs_dir = "failed_outputs"
-        self.std_dev = None
         os.makedirs(self.failed_outputs_dir, exist_ok=True)
 
     def load_bad_sequences(self):
