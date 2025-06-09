@@ -19,15 +19,6 @@ available_passes = {
     'Fusion': ' -ftransforms=fusion ',
     'CombineAssignments': ' -ftransforms=combine_assignments ',
     'UnrollingInner': ' -ftransforms=unrolling_inner ',
-    'LoopInvariant': ' -ftransforms=loop_invariant ',
-    'ConstantPropagation': ' -ftransforms=const_propagation ',
-    'UnusedDeclarations': ' -ftransforms=unused_declarations ',
-    'FullUnrolling': ' -ftransforms=full_unrolling ',
-    'LoopUnrolling': ' -ftransforms=unrolling ',
-    'ArithmeticExpansion': ' -ftransforms=arithmetic_exp ',
-    'ExpressionSimplifier': ' -ftransforms=expr_simplifier ',
-    'FullInlining': ' -ftransforms=full_inlining ',
-    'LoopNesting': ' -ftransforms=nesting '
 
 }
 
@@ -38,12 +29,15 @@ class DQN(nn.Module):
         super(DQN, self).__init__()
         self.embedding = nn.Embedding(len(available_passes) + 1, 16)
         self.lstm = nn.LSTM(16, 64, num_layers=2, batch_first=True)
-        self.attention = nn.MultiheadAttention(64, 4, batch_first=True)
+        # self.attention = nn.MultiheadAttention(64, 4, batch_first=True)
         self.fc1 = nn.Linear(64 + 1, 64)
         self.fc2 = nn.Linear(64, output_size)
+
     def forward(self, state, length):
         x = self.embedding(state)
         x, _ = self.lstm(x)
+        # attn_output, _ = self.attention(x, x, x)
+        # x = attn_output[:, -1, :]
         x = x[:, -1, :]
         x = torch.cat([x, length], dim=1)
         x = F.relu(self.fc1(x))
@@ -184,6 +178,7 @@ class SearchingOptimizer:
         self.bad_sequences_path = "bad_sequences.json"
         self.bad_sequences = self.load_bad_sequences()
         self.failed_outputs_dir = "failed_outputs"
+        self.std_dev = None
         os.makedirs(self.failed_outputs_dir, exist_ok=True)
 
     def load_bad_sequences(self):
@@ -406,12 +401,11 @@ class SearchingOptimizer:
         print(f"Base runtime: {self.base_runtime:.6f} {base_unit}")
         print(f"Best sequence: {self.best_sequence}")
         print(f"Best runtime: {self.best_runtime:.6f} {self.best_unit}")
-        print(f"Faster then original for {(1 - (self.best_runtime / self.base_runtime)) * 100} percents")
+        print(f"Faster than original for {((1 - (self.best_runtime / self.base_runtime)) * 100):2f} percents")
         self.save_history_to_csv()
         print(f"\nOptimization history saved to {self.history_csv}")
         print(f"\nModel saved successfully")
         self.agent.save_model()
-
 
 if __name__ == "__main__":
     searcher = SearchingOptimizer()
